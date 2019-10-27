@@ -1,0 +1,19 @@
+<h2>
+    Sign up Today!
+</h2>
+<h3>
+    Already have an account? 
+    <a href="/signin">Sign In</a>
+</h3>
+<form [formGroup]="regForm" (ngSubmit)="submitReg()" class="formContainer">
+    <mat-form-field>
+        <input matInput placeholder="Username" formControlName="username">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Password" formControlName="password">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Confirm Password" formControlName="passwordConfirm">
+    </mat-form-field>
+    <button type="submit" [disabled]="!regForm.valid">Submit</button>
+</form>
