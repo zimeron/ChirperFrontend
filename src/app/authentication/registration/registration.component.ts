@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { User } from 'src/app/users/User';
 import { UsersService } from 'src/app/users/users.service';
+import { UUID } from 'uuid';
 
 @Component({
   selector: 'app-registration',
@@ -27,6 +28,8 @@ export class RegistrationComponent implements OnInit {
       const user = new User();
       user.username = this.regForm.value.username;
       user.password = this.regForm.value.password;
+      user.id = require('uuid/v4');
+      UUID.uuidv4();
       this.userService.postUser(user)
         .subscribe(
           () => this.regForm.reset()
