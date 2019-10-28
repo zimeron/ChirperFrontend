@@ -11,7 +11,7 @@ export class UsersService {
   // HTTP connection information for Rails server
   // Specifies that this client does not want an HTML layout
   // TODO: change to heroku URL before deployment
-  usersURL = 'localhost:3000/users';
+  usersURL = 'chirperbackend.herokuapp.com/users';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
