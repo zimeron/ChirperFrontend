@@ -9,5 +9,7 @@ export class User {
     // This user's current post ids.  Used to query.
     posts: string[];
     // This user's followed user ids.  Used to query.
-    following: string[]
+    following: string[];
+    // User's password for authentication.
+    password: string;
 }
