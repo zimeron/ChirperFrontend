@@ -11,7 +11,7 @@ export class UsersService {
   // HTTP connection information for Rails server
   // Specifies that this client does not want an HTML layout
   // TODO: change to heroku URL before deployment
-  usersURL = 'https://chirperbackend.herokuapp.com/users';
+  usersURL = 'http://localhost:3000/users';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -25,6 +25,7 @@ export class UsersService {
     const userString = JSON.stringify(user);
     // TODO: post message while it's posting
     console.warn('Submitting new User, Please Wait');
+    console.warn(userString);
     return this.httpClient.post<string>(this.usersURL, userString, this.httpOptions)
       .pipe(
         tap(() => console.warn('Adding new User'))

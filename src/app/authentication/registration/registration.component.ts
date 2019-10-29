@@ -21,21 +21,18 @@ export class RegistrationComponent implements OnInit {
   });
 
   // On form submission, try to post to DB with form information
-  // Also Checks if password and confirmation match.
+  // Password match is on backend because bcrypt is squanchy
 
   submitReg() {
-    if (this.regForm.value.password === this.regForm.value.passwordConfirm) {
       const user = new User();
       user.username = this.regForm.value.username;
       user.password = this.regForm.value.password;
-      user.id = UUID();
+      user.password_confirmation = this.regForm.value.passwordConfirm;
+      console.warn(user);
       this.userService.postUser(user)
         .subscribe(
           () => this.regForm.reset()
         );
-    } else {
-      // TODO: Error handling for mismatched pwords.
-    }
   }
 
   constructor(private userService: UsersService) { }
