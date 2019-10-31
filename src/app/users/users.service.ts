@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient,  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { User } from './User';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { tap, catchError, map } from 'rxjs/operators';
+import { ServerResponse } from '../ServerResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -21,16 +22,14 @@ export class UsersService {
   // TODO: Some kind of message handler
 
   // Posts a JSON object from component to DB
-  postUser(user: User): Observable<string> {
+  postUser(user: User): Observable<ServerResponse> {
     const userString = JSON.stringify(user);
     // TODO: post message while it's posting
     console.warn('Submitting new User, Please Wait');
-    console.warn(userString);
-    return this.httpClient.post<string>(this.usersURL, userString, this.httpOptions)
+    return this.httpClient.post<ServerResponse>(this.usersURL, userString, this.httpOptions)
       .pipe(
         tap(() => console.warn('Adding new User'))
       );
-        // TODO: message and error handling
   }
 
   constructor(private httpClient: HttpClient) { }

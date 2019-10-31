@@ -14,7 +14,8 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatSelectModule,
-  MatOptionModule
+  MatOptionModule,
+  MatDialogModule
 } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 
@@ -23,15 +24,18 @@ import { GlobalNavigationComponent } from './global-navigation/global-navigation
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { MessagesComponent } from './messages.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GlobalNavigationComponent
+    GlobalNavigationComponent,
+    MessagesComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
+    MatDialogModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
@@ -48,6 +52,8 @@ import { AuthenticationModule } from './authentication/authentication.module';
     AuthenticationModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [MessagesComponent],
+  entryComponents: [MessagesComponent]
 })
 export class AppModule { }
