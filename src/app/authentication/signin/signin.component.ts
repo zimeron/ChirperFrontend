@@ -27,6 +27,11 @@ export class SigninComponent implements OnInit {
     message: []
   };
 
+  // Flags for template
+  // TODO: drop these into Local storage so they survive a refresh
+  loggedOut = true;
+  loggedIn = false;
+
   // On form submission, send credentials to server for authentication.
   submit() {
     console.warn('Submitting credentials, please wait');
@@ -41,6 +46,8 @@ export class SigninComponent implements OnInit {
         this.serverResponse.status = response.status;
         this.serverResponse.message = response.message;
         this.openDialog();
+        this.loggedOut = false;
+        this.loggedIn = true;
       },
       err => {
         console.warn(err);

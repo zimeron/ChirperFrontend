@@ -12,14 +12,12 @@ export class UsersService {
   // HTTP connection information for Rails server
   // Specifies that this client does not want an HTML layout
   // TODO: change to heroku URL before deployment
-  URL = 'http://localhost:3000/';
+  URL = 'https://chirperbackend.herokuapp.com/';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   };
-
-  // TODO: Some kind of message handler
 
   // Posts a JSON object from component to DB
   postUser(user: User, controller: string): Observable<ServerResponse> {
