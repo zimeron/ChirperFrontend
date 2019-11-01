@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { User } from 'src/app/users/User';
 import { UsersService } from 'src/app/users/users.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ServerResponse } from 'src/app/ServerResponse';
-import { HttpResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
 import { MessagesComponent } from 'src/app/messages.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -37,12 +36,13 @@ export class RegistrationComponent implements OnInit {
       user.username = this.regForm.value.username;
       user.password = this.regForm.value.password;
       user.password_confirmation = this.regForm.value.passwordConfirm;
-      this.userService.postUser(user)
+      this.userService.postUser(user, 'users')
         .subscribe(response => {
             console.warn(response);
             this.regForm.reset();
             this.serverResponse.status = 'Success! Welcome to Chirper!';
-            // TODO: redirect to sign in page with welcome message
+            this.openDialog();
+            this.router.navigate(['/signin']);
         },
         err => {
           console.warn(err);
@@ -62,7 +62,7 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
-  constructor(private userService: UsersService, public dialog: MatDialog) { }
+  constructor(private userService: UsersService, public dialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
   }

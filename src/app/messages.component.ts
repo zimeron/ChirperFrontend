@@ -10,9 +10,11 @@ import { ServerResponse } from './ServerResponse';
 })
 export class MessagesComponent implements OnInit {
 
+
   constructor(
     public dialogRef: MatDialogRef<MessagesComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ServerResponse) { }
+    @Inject(MAT_DIALOG_DATA) public data: ServerResponse) {
+    }
 
   ngOnInit() {
   }

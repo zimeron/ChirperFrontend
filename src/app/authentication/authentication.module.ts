@@ -5,10 +5,13 @@ import { MatCardModule, MatFormFieldModule, MatInputModule, MatDialogModule, Mat
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { UsersModule } from '../users/users.module';
+import { SigninComponent } from './signin/signin.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [RegistrationComponent],
+  declarations: [RegistrationComponent, SigninComponent],
   imports: [
+    RouterModule,
     UsersModule,
     MatCardModule,
     MatDialogModule,

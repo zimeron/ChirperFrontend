@@ -12,7 +12,7 @@ export class UsersService {
   // HTTP connection information for Rails server
   // Specifies that this client does not want an HTML layout
   // TODO: change to heroku URL before deployment
-  usersURL = 'http://localhost:3000/users';
+  URL = 'http://localhost:3000/';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -22,11 +22,11 @@ export class UsersService {
   // TODO: Some kind of message handler
 
   // Posts a JSON object from component to DB
-  postUser(user: User): Observable<ServerResponse> {
+  postUser(user: User, controller: string): Observable<ServerResponse> {
     const userString = JSON.stringify(user);
     // TODO: post message while it's posting
     console.warn('Submitting new User, Please Wait');
-    return this.httpClient.post<ServerResponse>(this.usersURL, userString, this.httpOptions)
+    return this.httpClient.post<ServerResponse>(this.URL + controller, userString, this.httpOptions)
       .pipe(
         tap(() => console.warn('Adding new User'))
       );
