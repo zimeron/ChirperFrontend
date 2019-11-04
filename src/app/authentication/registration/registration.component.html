@@ -1,5 +1,5 @@
 
-<form [formGroup]="regForm" (ngSubmit)="submitReg()" class="formContainer">
+<form [formGroup]="regForm" (ngSubmit)="submitReg()" class="formContainer" *ngIf="notInSession">
     <h2>
         Sign up Today!
     </h2>
@@ -11,10 +11,14 @@
         <input matInput placeholder="Username" formControlName="username">
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Password" formControlName="password">
+        <input matInput placeholder="Password" formControlName="password" [type]="hidePass ? 'password' : 'text'">
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Confirm Password" formControlName="passwordConfirm">
+        <input matInput placeholder="Confirm Password" formControlName="passwordConfirm" [type]="hideConf ? 'password' : 'text'">
     </mat-form-field>
     <button type="submit" [disabled]="!regForm.valid">Submit</button>
 </form>
+<div *ngIf="inSession">
+    <h2>Looks like you took a wrong turn at Albaquerque!</h2>
+    <a href="/profile">Click here to see your profile!</a>
+</div>

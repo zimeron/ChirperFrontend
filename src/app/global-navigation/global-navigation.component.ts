@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
+import { UsersService } from '../users/users.service';
 
 @Component({
   selector: 'app-global-navigation',
@@ -10,6 +11,18 @@ import { map } from 'rxjs/operators';
 })
 export class GlobalNavigationComponent {
 
-  constructor() {}
+  // Template flags
+  inSession = false;
+  notInSession = true;
+
+  constructor(private userService: UsersService) {
+    this.userService.inSession().pipe(take(1))
+      .subscribe(inSession => {
+        if (inSession) {
+          this.inSession = true;
+          this.notInSession = false;
+        }
+      });
+  }
 
 }

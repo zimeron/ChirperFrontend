@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ServerResponse } from 'src/app/ServerResponse';
 import { MessagesComponent } from 'src/app/messages.component';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registration',
@@ -23,27 +24,39 @@ export class RegistrationComponent implements OnInit {
     passwordConfirm: new FormControl('')
   });
 
+  // Model initialization for CRUD request response;
   serverResponse: ServerResponse = {
     status: '',
-    message: []
+    message: [],
+    userid: 0
   };
+
+  // Template Flags
+  inSession = false;
+  notInSession = true;
+  hidePass = true;
+  hideConf = true;
 
   // On form submission, try to post to DB with form information
   // Password match is on backend because bcrypt is squanchy
 
   submitReg() {
       const user = new User();
+      // Grab form data
       user.username = this.regForm.value.username;
       user.password = this.regForm.value.password;
       user.password_confirmation = this.regForm.value.passwordConfirm;
+      // Send to server
       this.userService.postUser(user, 'users')
         .subscribe(response => {
             console.warn(response);
             this.regForm.reset();
             this.serverResponse.status = 'Success! Welcome to Chirper!';
             this.openDialog();
+            // Route to sign in
             this.router.navigate(['/signin']);
         },
+        // Error Handling and display
         err => {
           console.warn(err);
           this.serverResponse = err.error;
@@ -62,7 +75,16 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
-  constructor(private userService: UsersService, public dialog: MatDialog, private router: Router) { }
+  constructor(private userService: UsersService, public dialog: MatDialog, private router: Router) { 
+    this.userService.inSession().pipe(take(1))
+      .subscribe(inSession => {
+        if (inSession) {
+          this.inSession = true;
+          this.notInSession = false;
+          this.router.navigate(['/profile']);
+        }
+      });
+  }
 
   ngOnInit() {
   }

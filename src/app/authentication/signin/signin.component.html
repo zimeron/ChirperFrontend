@@ -1,11 +1,13 @@
-<form [formGroup]="signinForm" (ngSubmit)="submit()" class="formContainer" *ngIf="loggedOut">
+<form [formGroup]="signinForm" (ngSubmit)="submit()" class="formContainer" *ngIf="notInSession">
     <h2>Welcome to Chirper!</h2>
     <h3>Please sign in!</h3>
     <mat-form-field>
         <input matInput placeholder="Username" formControlName="username">
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Password" formControlName="password">
+        <input matInput placeholder="Password" formControlName="password" [type]="hide ? 'password' : 'text'">
     </mat-form-field>
     <button type="submit">Submit</button>
 </form>
+<h2 *ngIf="inSession">Looks like you took a wrong turn at Albaquerque!</h2>
+<a href="/profile" *ngIf="inSession">Click here to go to your profile!</a>

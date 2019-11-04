@@ -3,8 +3,10 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { User } from 'src/app/users/User';
 import { UsersService } from 'src/app/users/users.service';
 import { ServerResponse } from 'src/app/ServerResponse';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatIcon } from '@angular/material';
 import { MessagesComponent } from 'src/app/messages.component';
+import { take } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -22,35 +24,41 @@ export class SigninComponent implements OnInit {
     password: new FormControl('')
   });
 
+  // Model initialization for CRUD response
   serverResponse: ServerResponse = {
     status: '',
-    message: []
+    message: [],
+    userid: 0
   };
 
-  // Flags for template
-  // TODO: drop these into Local storage so they survive a refresh
-  loggedOut = true;
-  loggedIn = false;
+  // Template flags
+  inSession = false;
+  notInSession = true;
+  hide = true;
 
   // On form submission, send credentials to server for authentication.
   submit() {
+    // Debug
     console.warn('Submitting credentials, please wait');
+    // Grab form data
     const user = new User();
     user.password = this.signinForm.value.password;
     user.username = this.signinForm.value.username;
+    // Send to Server, await response
     this.userService.postUser(user, 'sessions')
       .subscribe(response => {
-        console.warn(response);
         this.signinForm.reset();
-        // TODO: Route to Timeline
+        // Display success message
         this.serverResponse.status = response.status;
         this.serverResponse.message = response.message;
         this.openDialog();
-        this.loggedOut = false;
-        this.loggedIn = true;
+        // Frontend query and flag information, held in local storage
+        localStorage.setItem('userid', response.userid.toString());
+        // Route to user profile after log in success
+        this.router.navigate(['/profile']);
       },
+      // Error handling
       err => {
-        console.warn(err);
         this.signinForm.reset();
         this.serverResponse.status = err.error.status;
         this.serverResponse.message = err.error.message;
@@ -58,6 +66,7 @@ export class SigninComponent implements OnInit {
       });
   }
 
+  // Calls in the dialog box component for success/error message
   openDialog(): void {
     const dialogRef = this.dialog.open(MessagesComponent, {
       width: '250px',
@@ -65,7 +74,16 @@ export class SigninComponent implements OnInit {
     });
   }
 
-  constructor(private userService: UsersService, private dialog: MatDialog) { }
+  constructor(private userService: UsersService, private dialog: MatDialog, private router: Router) {
+    this.userService.inSession().pipe(take(1))
+      .subscribe(inSession => {
+        if (inSession) {
+          this.inSession = true;
+          this.notInSession = false;
+          this.router.navigate(['/profile']);
+        }
+      });
+  }
 
   ngOnInit() {
   }

@@ -2,8 +2,10 @@
     <mat-sidenav #drawer class="sidenav">
       <mat-toolbar>Menu</mat-toolbar>
       <mat-nav-list>
-        <a mat-list-item href="">Home</a>
-        <a mat-list-item href="/signin">Sign In</a>
+        <a mat-list-item href="" *ngIf="notInSession">Home</a>
+        <a mat-list-item href="/signin" *ngIf="notInSession">Sign In</a>
+        <a mat-list-item href="/signout" *ngIf="inSession">Sign out</a>
+        <a mat-list-item href="/profile" *ngIf="inSession">Profile</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
