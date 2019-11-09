@@ -16,8 +16,8 @@ export class PostsService {
   // HTTP connection information
   // Specifies this client does not want HTML
   // Change to heroku URL before deployment
-  // URL = 'https://chirperbackend.herokuapp.com/';
-  URL = 'http://localhost:3000/';
+  URL = 'https://chirperbackend.herokuapp.com/';
+  // URL = 'http://localhost:3000/';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
