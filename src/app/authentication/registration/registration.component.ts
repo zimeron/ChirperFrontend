@@ -28,7 +28,8 @@ export class RegistrationComponent implements OnInit {
   serverResponse: ServerResponse = {
     status: '',
     message: [],
-    userid: 0
+    userid: 0,
+    username: ''
   };
 
   // Template Flags
@@ -58,8 +59,14 @@ export class RegistrationComponent implements OnInit {
         },
         // Error Handling and display
         err => {
-          console.warn(err);
-          this.serverResponse = err.error;
+          // Check if the error is from the server or
+          // due to unreachable server.
+          if (err.error.status) {
+            this.serverResponse = err.error;
+          } else {
+            this.serverResponse.status = 'Error';
+            this.serverResponse.message = ['Something went wrong, please try again later'];
+          }
           this.openDialog();
           this.regForm.reset();
         }
@@ -75,7 +82,7 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
-  constructor(private userService: UsersService, public dialog: MatDialog, private router: Router) { 
+  constructor(private userService: UsersService, public dialog: MatDialog, private router: Router) {
     this.userService.inSession().pipe(take(1))
       .subscribe(inSession => {
         if (inSession) {

@@ -1,15 +1,17 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { GlobalNavigationComponent } from './global-navigation/global-navigation.component';
+import { AppModule } from './app.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        AppModule
       ],
       declarations: [
-        AppComponent
       ],
     }).compileComponents();
   }));
@@ -26,10 +28,4 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('Chirper');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('Chirper app is running!');
-  });
 });

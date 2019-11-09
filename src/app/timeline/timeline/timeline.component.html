@@ -1,0 +1,15 @@
+<form [formGroup]="postForm" (ngSubmit)="createPost()" class="formContainer" *ngIf="inSession">
+    <mat-form-field>
+        <textarea matInput placeholder="What's on your mind?" formControlName="content">
+        </textarea>
+    </mat-form-field>
+    <button type="submit">Submit</button>
+</form>
+<mat-card *ngFor="let post of posts" style="width: 40%">
+    <mat-card-title>
+        {{post.username}}
+    </mat-card-title>
+    <mat-card-content>
+        {{post.content}}
+    </mat-card-content>
+</mat-card>

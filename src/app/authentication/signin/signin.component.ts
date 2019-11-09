@@ -28,7 +28,8 @@ export class SigninComponent implements OnInit {
   serverResponse: ServerResponse = {
     status: '',
     message: [],
-    userid: 0
+    userid: 0,
+    username: ''
   };
 
   // Template flags
@@ -54,14 +55,22 @@ export class SigninComponent implements OnInit {
         this.openDialog();
         // Frontend query and flag information, held in local storage
         localStorage.setItem('userid', response.userid.toString());
+        localStorage.setItem('username', response.username);
         // Route to user profile after log in success
         this.router.navigate(['/profile']);
       },
       // Error handling
       err => {
-        this.signinForm.reset();
-        this.serverResponse.status = err.error.status;
-        this.serverResponse.message = err.error.message;
+        // Check if it's an error the server gave us,
+        // or an error getting to the server
+        if (err.error.status) {
+          this.serverResponse.status = err.error.status;
+          this.serverResponse.message = err.error.message;
+          this.signinForm.reset();
+        } else {
+          this.serverResponse.status = 'Error';
+          this.serverResponse.message = ['Something went wrong, please try again later'];
+        }
         this.openDialog();
       });
   }

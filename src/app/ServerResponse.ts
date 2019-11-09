@@ -6,4 +6,6 @@ export class ServerResponse {
     message: string[];
     // UserID for session management, if applicable.
     userid: number;
+    // Username of user in session.
+    username: string;
 }

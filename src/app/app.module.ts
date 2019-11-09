@@ -25,6 +25,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MessagesComponent } from './messages.component';
+import { TimelineModule } from './timeline/timeline.module';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { MessagesComponent } from './messages.component';
     MatInputModule,
     MatSelectModule,
     MatOptionModule,
-    AuthenticationModule
+    AuthenticationModule,
+    TimelineModule
   ],
   providers: [],
   bootstrap: [AppComponent],
