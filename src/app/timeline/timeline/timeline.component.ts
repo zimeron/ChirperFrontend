@@ -52,7 +52,7 @@ export class TimelineComponent implements OnInit {
             this.serverResponse.status = 'Success! Post created!';
             this.openDialog();
             // Refresh Timeline
-            this.ngOnInit();
+            this.getPosts();
         },
         // Error Handling and display
         err => {

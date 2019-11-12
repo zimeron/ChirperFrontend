@@ -69,5 +69,33 @@ export class UsersService {
     }
   }
 
+  // Gets a list of users that the logged in user is not already following
+  getUsers(): Observable<User[]> {
+    console.warn('Retrieving users, please wait');
+    return this.httpClient.get<User[]>(this.URL + 'users/' + localStorage.getItem('userid') + '/toFollow', this.httpOptions)
+      .pipe(
+        tap(() => console.warn('Executing GET'))
+      );
+  }
+
+  // Gets user data by id
+  getUserById(id: string): Observable<User> {
+    console.warn('Retrieving user with id: ' + id);
+    return this.httpClient.get<User>(this.URL + 'users/' + id, this.httpOptions)
+      .pipe(
+        tap(() => console.warn('Executing GET'))
+      );
+  }
+
+  // Updates a user's data
+  updateUser(user: User): Observable<ServerResponse> {
+    const userString = JSON.stringify(user);
+    console.warn('Updating user data, please wait');
+    return this.httpClient.put<ServerResponse>(this.URL + 'users/' + localStorage.getItem('userid'), userString, this.httpOptions)
+      .pipe(
+        tap(() => console.warn('Executing PUT'))
+      );
+  }
+
   constructor(private httpClient: HttpClient) { }
 }
