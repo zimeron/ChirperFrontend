@@ -5,4 +5,6 @@
 <div *ngIf="notInSession">
     <h2>Looks like you took a wrong turn at Albaquerque!</h2>
     <a href="/registration">Click here to return to the homepage</a>
+    <mat-spinner *ngIf="loading">
+    </mat-spinner>
 </div>

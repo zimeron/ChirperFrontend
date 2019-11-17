@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient,  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { User } from './User';
 import { Observable, of } from 'rxjs';
-import { tap, catchError, map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { ServerResponse } from '../ServerResponse';
+import { environment } from './../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,37 +15,33 @@ import { ServerResponse } from '../ServerResponse';
 export class UsersService {
   // HTTP connection information for Rails server
   // Specifies that this client does not want an HTML layout
-  // Change to heroku URL before deployment
-  URL = 'https://chirperbackend.herokuapp.com/';
-  // URL = 'http://localhost:3000/';
+  URL = environment.apiURL;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   };
 
-  // Posts a JSON object from component to DB
+  // Posts a new User to the server, or posts credentials for authentication
   postUser(user: User, controller: string): Observable<ServerResponse> {
     const userString = JSON.stringify(user);
-    // TODO: post message while it's posting
-    console.warn('Submitting new User, Please Wait');
+    console.warn('Submitting new User or Credentials, Please Wait');
     return this.httpClient.post<ServerResponse>(this.URL + controller, userString, this.httpOptions)
       .pipe(
         tap(() => console.warn('Executing POST'))
       );
   }
 
-  // Sends a DELETE from component to server, to delete a user from DB
-  delete(user: User, controller: string): Observable<ServerResponse> {
-    // TODO: post message while it's sending
+  // Sends request to delete user from DB
+  delete(user: User): Observable<ServerResponse> {
     console.warn('Submitting Delete Request, Please Wait');
-    return this.httpClient.delete<ServerResponse>(this.URL + controller + user.id, this.httpOptions)
+    return this.httpClient.delete<ServerResponse>(this.URL + 'users/' + user.id, this.httpOptions)
       .pipe(
         tap(() => console.warn('Executing DELETE'))
       );
   }
 
-  // For logout, no user necessary and always routes to Sessions controller
+  // Logs out session user, based on stored id in browser
   logout(): Observable<ServerResponse> {
     console.warn('Submitting Logout request, please wait');
     return this.httpClient.delete<ServerResponse>(this.URL + 'sessions/' + localStorage.getItem('userid'), this.httpOptions)

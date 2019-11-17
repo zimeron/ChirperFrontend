@@ -1,7 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { GlobalNavigationComponent } from './global-navigation/global-navigation.component';
 import { AppModule } from './app.module';
 
 describe('AppComponent', () => {

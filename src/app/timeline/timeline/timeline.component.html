@@ -5,11 +5,15 @@
     </mat-form-field>
     <button type="submit">Submit</button>
 </form>
-<mat-card *ngFor="let post of posts" style="width: 40%">
-    <mat-card-title>
-        {{post.username}}
-    </mat-card-title>
-    <mat-card-content>
-        {{post.content}}
-    </mat-card-content>
-</mat-card>
+<div *ngIf="inSession">
+    <mat-spinner *ngIf="loading">
+    </mat-spinner>
+    <mat-card *ngFor="let post of posts" style="width: 40%">
+        <mat-card-title>
+            {{post.username}}
+        </mat-card-title>
+        <mat-card-content>
+            {{post.content}}
+        </mat-card-content>
+    </mat-card>
+</div>

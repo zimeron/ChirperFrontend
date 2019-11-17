@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ServerResponse } from './ServerResponse';
 
-// Binding component for message display dialog
+// Binding component for message display dialog box
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',

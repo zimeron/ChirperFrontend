@@ -1,7 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RegistrationComponent } from './registration/registration.component';
-import { MatCardModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatIconModule } from '@angular/material';
+import {
+  MatCardModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatDialogModule,
+  MatIconModule,
+  MatProgressSpinnerModule
+} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { UsersModule } from '../users/users.module';
@@ -16,6 +23,7 @@ import { SignoutComponent } from './signout/signout.component';
     RouterModule,
     UsersModule,
     MatCardModule,
+    MatProgressSpinnerModule,
     MatDialogModule,
     MatInputModule,
     MatIconModule,

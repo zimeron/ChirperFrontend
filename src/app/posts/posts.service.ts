@@ -4,6 +4,7 @@ import { Post } from './Post';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ServerResponse } from '../ServerResponse';
+import { environment } from './../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,7 @@ export class PostsService {
   // HTTP connection information
   // Specifies this client does not want HTML
   // Change to heroku URL before deployment
-  URL = 'https://chirperbackend.herokuapp.com/';
-  // URL = 'http://localhost:3000/';
+  URL = environment.apiURL;
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -28,7 +28,6 @@ export class PostsService {
   // Sorry about this name...
   postPost(post: Post): Observable<ServerResponse> {
     const postString = JSON.stringify(post);
-    // TODO: post message while it's posting
     console.warn('Submitting new Post, Please Wait');
     return this.httpClient.post<ServerResponse>(this.URL + 'posts', postString, this.httpOptions)
       .pipe(

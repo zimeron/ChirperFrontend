@@ -10,6 +10,8 @@
         </mat-card-title>
         <button mat-button (click)="newFollowing(user.id)">Follow</button>
     </mat-card>
+    <mat-spinner *ngIf="loading">
+    </mat-spinner>
 </div>
 <div *ngIf="notInSession">
     <h2>Looks like you took a wrong turn at Albaquerque!</h2>

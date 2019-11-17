@@ -11,6 +11,7 @@ import { SigninComponent } from '../signin/signin.component';
 import { SignoutComponent } from '../signout/signout.component';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TimelineModule } from 'src/app/timeline/timeline.module';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -30,7 +31,8 @@ describe('ProfileComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        TimelineModule
       ],
       providers: [
         UsersService

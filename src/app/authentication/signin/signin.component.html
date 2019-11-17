@@ -8,6 +8,8 @@
         <input matInput placeholder="Password" formControlName="password" [type]="hide ? 'password' : 'text'">
     </mat-form-field>
     <button type="submit">Submit</button>
+    <mat-spinner *ngIf="loading">
+    </mat-spinner>
 </form>
 <h2 *ngIf="inSession">Looks like you took a wrong turn at Albaquerque!</h2>
 <a href="/profile" *ngIf="inSession">Click here to go to your profile!</a>

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { User } from 'src/app/users/User';
-import { UsersService } from 'src/app/users/users.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ServerResponse } from 'src/app/ServerResponse';
-import { MessagesComponent } from 'src/app/messages.component';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
+
+import { User } from 'src/app/users/User';
+import { UsersService } from 'src/app/users/users.service';
+import { ServerResponse } from 'src/app/ServerResponse';
+import { MessagesComponent } from 'src/app/messages.component';
 
 @Component({
   selector: 'app-registration',
@@ -37,11 +38,13 @@ export class RegistrationComponent implements OnInit {
   notInSession = true;
   hidePass = true;
   hideConf = true;
+  loading = false;
 
   // On form submission, try to post to DB with form information
-  // Password match is on backend because bcrypt is squanchy
+  // Password match is on backend
 
   submitReg() {
+      this.loading = true;
       const user = new User();
       // Grab form data
       user.username = this.regForm.value.username;
@@ -50,10 +53,12 @@ export class RegistrationComponent implements OnInit {
       // Send to server
       this.userService.postUser(user, 'users')
         .subscribe(response => {
+          // Success message and redirect
             console.warn(response);
             this.regForm.reset();
             this.serverResponse.status = 'Success! Welcome to Chirper!';
             this.openDialog();
+            this.loading = false;
             // Route to sign in
             this.router.navigate(['/signin']);
         },
@@ -69,6 +74,7 @@ export class RegistrationComponent implements OnInit {
           }
           this.openDialog();
           this.regForm.reset();
+          this.loading = false;
         }
       );
   }
@@ -83,6 +89,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   constructor(private userService: UsersService, public dialog: MatDialog, private router: Router) {
+    // Checks if user is in session, this page should only display if not already in session.
+    // Routes to Profile page if already in session.
     this.userService.inSession().pipe(take(1))
       .subscribe(inSession => {
         if (inSession) {

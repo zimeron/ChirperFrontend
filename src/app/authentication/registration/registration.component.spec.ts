@@ -1,13 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RegistrationComponent } from './registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule, MatFormFieldModule, MatInputModule } from '@angular/material';
-import { UsersModule } from 'src/app/users/users.module';
-import { UsersService } from 'src/app/users/users.service';
+import { MatDialogModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { RegistrationComponent } from './registration.component';
+import { UsersService } from 'src/app/users/users.service';
+import { MessagesComponent } from 'src/app/messages.component';
+import { RouteOutputStub } from 'src/app/RouteOutputStub';
 
 describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
@@ -15,15 +17,20 @@ describe('RegistrationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RegistrationComponent ],
+      declarations: [
+        RegistrationComponent,
+        MessagesComponent
+       ],
       imports: [
         FormsModule,
         MatDialogModule,
-        UsersModule,
         MatFormFieldModule,
         ReactiveFormsModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          {path: 'profile', component: RouteOutputStub}
+        ]),
         MatInputModule,
+        MatProgressSpinnerModule,
         HttpClientTestingModule,
         BrowserAnimationsModule
       ],

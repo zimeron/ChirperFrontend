@@ -1,12 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SignoutComponent } from './signout.component';
-import { MatDialogModule } from '@angular/material';
-import { UsersModule } from 'src/app/users/users.module';
-import { UsersService } from 'src/app/users/users.service';
+import { MatDialogModule, MatProgressSpinnerModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { utf8Encode } from '@angular/compiler/src/util';
+
+import { SignoutComponent } from './signout.component';
+import { MessagesComponent } from 'src/app/messages.component';
+
+import { UsersService } from 'src/app/users/users.service';
 
 describe('SignoutComponent', () => {
   let component: SignoutComponent;
@@ -14,12 +15,15 @@ describe('SignoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SignoutComponent ],
+      declarations: [
+        SignoutComponent,
+        MessagesComponent
+      ],
       imports: [
         MatDialogModule,
         RouterTestingModule,
-        UsersModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatProgressSpinnerModule
       ],
       providers: [
         UsersService

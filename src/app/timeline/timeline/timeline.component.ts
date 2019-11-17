@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PostsService } from 'src/app/posts/posts.service'
+import { PostsService } from 'src/app/posts/posts.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ServerResponse } from 'src/app/ServerResponse';
 import { Post } from 'src/app/posts/Post';
 import { MessagesComponent } from 'src/app/messages.component';
-import { MatDialog, MatInput, MatCard } from '@angular/material';
+import { MatDialog, MatInput, MatCard, MatSpinner } from '@angular/material';
 import { UsersService } from 'src/app/users/users.service';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
@@ -27,6 +27,7 @@ export class TimelineComponent implements OnInit {
   // Template Flags
   inSession = false;
   notInSession = true;
+  loading = false;
 
   // Model initialization for CRUD request response;
   serverResponse: ServerResponse = {
@@ -38,7 +39,8 @@ export class TimelineComponent implements OnInit {
 
   // Post content to the DB
   createPost() {
-    let post = new Post();
+    this.loading = true;
+    const post = new Post();
     // Grab form data
     post.content = this.postForm.value.content;
     post.userid = +localStorage.getItem('userid');
@@ -77,6 +79,19 @@ export class TimelineComponent implements OnInit {
       .subscribe(response => {
         console.warn(response);
         this.posts = response.reverse();
+      },
+      // Error Handling and display
+      err => {
+        // Check if the error is from the server or
+        // due to unreachable server.
+        if (err.error.status) {
+          this.serverResponse = err.error;
+        } else {
+          this.serverResponse.status = 'Error';
+          this.serverResponse.message = ['Something went wrong, please try again later'];
+        }
+        this.openDialog();
+        this.loading = false;
       });
 
   }
@@ -90,6 +105,7 @@ export class TimelineComponent implements OnInit {
   }
 
   constructor(private postService: PostsService, public dialog: MatDialog, private userService: UsersService, private router: Router) {
+    // Check to see if in sesison or not.  If not, send browser back to homepage
     this.userService.inSession().pipe(take(1))
       .subscribe(inSession => {
         if (inSession) {
