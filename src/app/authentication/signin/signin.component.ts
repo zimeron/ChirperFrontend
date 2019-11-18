@@ -94,10 +94,7 @@ export class SigninComponent implements OnInit {
         if (inSession) {
           this.inSession = true;
           this.notInSession = false;
-          // Because testing routed methods in Angular is a nightmare
-          if (!environment.test) {
-            this.router.navigate(['/profile']);
-          }
+          this.router.navigate(['/profile']);
         }
       });
   }
