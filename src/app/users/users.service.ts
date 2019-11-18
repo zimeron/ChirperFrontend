@@ -26,6 +26,7 @@ export class UsersService {
   postUser(user: User, controller: string): Observable<ServerResponse> {
     const userString = JSON.stringify(user);
     console.warn('Submitting new User or Credentials, Please Wait');
+    console.warn(this.URL);
     return this.httpClient.post<ServerResponse>(this.URL + controller, userString, this.httpOptions)
       .pipe(
         tap(() => console.warn('Executing POST'))
